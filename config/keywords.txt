@@ -1,15 +1,13 @@
 # One GitHub search per line. Lines starting with # are ignored.
-# v0.2 (tightened after first run: 1,191 rows, many junk). Quotes force exact phrases;
+# v0.3 (run 2: 624 rows; dropped ESRS = Firefox ESR collisions, MRV = blockchain hackathon repos). Quotes force exact phrases;
 # "in:description,topics" stops matches in random README text. Still untested: re-run Ingest and check.
 "carbon accounting" in:description,topics
 "GHG Protocol" in:description,topics
 "scope 3" emissions in:description
 "CSRD" in:description,topics
-"ESRS" in:description
 "emission factors" in:description
 "life cycle assessment" in:description,topics
 "carbon intensity" in:description
-"MRV" carbon in:description,topics
 "carbon removal" in:description,topics
 "methane detection" in:description,topics
 "decarbonization" in:description,topics
@@ -19,3 +17,8 @@
 "battery energy storage" in:description,topics
 "OCPP" in:description,topics
 "energy management system" in:description
+"climate tech" in:description,topics
+"carbon management" in:description
+"emissions reporting" in:description
+"supply chain emissions" in:description
+"CBAM" in:description,topics
