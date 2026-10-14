@@ -1,20 +1,21 @@
-# One search phrase per line. Lines starting with # are ignored.
-# DRAFT: untested. Day 2 check: run each on github.com (Repositories, Recently updated) and delete keywords that return junk.
-carbon accounting
-carbon footprint
-scope 3 emissions
-emissions tracking
-greenhouse gas emissions
-ESG reporting
-grid optimization
-demand response
-battery storage
-EV charging
-energy management
-solar forecasting
-climate risk
-methane detection
-carbon credits
-carbon removal
-sustainability reporting
-net zero
+# One GitHub search per line. Lines starting with # are ignored.
+# v0.2 (tightened after first run: 1,191 rows, many junk). Quotes force exact phrases;
+# "in:description,topics" stops matches in random README text. Still untested: re-run Ingest and check.
+"carbon accounting" in:description,topics
+"GHG Protocol" in:description,topics
+"scope 3" emissions in:description
+"CSRD" in:description,topics
+"ESRS" in:description
+"emission factors" in:description
+"life cycle assessment" in:description,topics
+"carbon intensity" in:description
+"MRV" carbon in:description,topics
+"carbon removal" in:description,topics
+"methane detection" in:description,topics
+"decarbonization" in:description,topics
+"climate risk" in:description,topics
+"virtual power plant" in:description,topics
+"demand response" in:description,topics
+"battery energy storage" in:description,topics
+"OCPP" in:description,topics
+"energy management system" in:description
