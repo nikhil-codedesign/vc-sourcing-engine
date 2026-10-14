@@ -1,0 +1,20 @@
+# One search phrase per line. Lines starting with # are ignored.
+# DRAFT: untested. Day 2 check: run each on github.com (Repositories, Recently updated) and delete keywords that return junk.
+carbon accounting
+carbon footprint
+scope 3 emissions
+emissions tracking
+greenhouse gas emissions
+ESG reporting
+grid optimization
+demand response
+battery storage
+EV charging
+energy management
+solar forecasting
+climate risk
+methane detection
+carbon credits
+carbon removal
+sustainability reporting
+net zero
