@@ -14,7 +14,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parent.parent
 KEYWORDS_FILE = ROOT / "config" / "keywords.txt"
-OUT_FILE = ROOT / "data" / "signals.csv"
+OUT_FILE = ROOT / "data" / "raw_github.csv"
 
 PAGES_PER_KEYWORD = 2   # 2 pages x 50 = up to 100 results per keyword
 PER_PAGE = 50
