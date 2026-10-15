@@ -13,8 +13,8 @@ import requests
 API_KEY = os.environ.get("GEMINI_API_KEY", "")
 # Override without editing code: set a repo variable/secret named LLM_MODEL.
 # Check the current free models at https://ai.google.dev/gemini-api/docs/pricing
-MODEL = os.environ.get("LLM_MODEL", "gemini-3.1-flash-lite")
-MIN_SECONDS_BETWEEN_CALLS = float(os.environ.get("LLM_MIN_SECONDS", "6.5"))  # ~9 calls/min
+MODEL = os.environ.get("LLM_MODEL") or "gemini-3.1-flash-lite"  # "or": an unset GitHub variable arrives as an empty string
+MIN_SECONDS_BETWEEN_CALLS = float(os.environ.get("LLM_MIN_SECONDS") or 6.5)  # ~9 calls/min
 MAX_RETRIES = 6
 
 _last_call = 0.0

@@ -1,0 +1,47 @@
+name: Sample
+
+on:
+  workflow_dispatch:
+    inputs:
+      size:
+        description: "How many companies to sample"
+        default: "30"
+      outfile:
+        description: "File to create in data/ (use gold_test.csv later for a second, fresh test set)"
+        default: "gold_sample.csv"
+      overwrite:
+        description: "Type true to replace an existing file (this would break labels you already made)"
+        default: "false"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data
+  cancel-in-progress: false
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Draw the random sample
+        env:
+          SAMPLE_SIZE: ${{ inputs.size }}
+          SAMPLE_OUT: ${{ inputs.outfile }}
+          SAMPLE_OVERWRITE: ${{ inputs.overwrite }}
+        run: python src/sample.py
+
+      - name: Save results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "Add sample for labeling"
+          git pull --rebase origin main
+          git push
