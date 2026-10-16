@@ -9,6 +9,14 @@ on:
       outfile:
         description: "File to create in data/ (use gold_test.csv later for a second, fresh test set)"
         default: "gold_sample.csv"
+      pool:
+        description: "random = anything. model_keep / model_reject = draw only from what the filter kept / rejected (run Filter first)."
+        type: choice
+        options:
+          - random
+          - model_keep
+          - model_reject
+        default: random
       overwrite:
         description: "Type true to replace an existing file (this would break labels you already made)"
         default: "false"
@@ -35,6 +43,7 @@ jobs:
           SAMPLE_SIZE: ${{ inputs.size }}
           SAMPLE_OUT: ${{ inputs.outfile }}
           SAMPLE_OVERWRITE: ${{ inputs.overwrite }}
+          SAMPLE_POOL: ${{ inputs.pool }}
         run: python src/sample.py
 
       - name: Save results
