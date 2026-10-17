@@ -1,4 +1,4 @@
-"""Day 4: merge raw_github.csv + raw_hn.csv into data/signals.csv and remove duplicates.
+"""Day 4: merge raw_github.csv + raw_hn.csv (+ hand-curated data/manual_leads.csv) into data/signals.csv and remove duplicates.
 
 Rules:
 - Same normalized URL = same company. A Show HN post that links to a GitHub repo is merged into the repo's row
@@ -21,7 +21,7 @@ DATA = ROOT / "data"
 FIELDS = [
     "source", "name", "url", "description", "stars", "forks", "language", "topics",
     "owner", "owner_type", "homepage", "created_at", "pushed_at", "keyword",
-    "hn_points", "hn_comments", "hn_url", "collected_at",
+    "hn_points", "hn_comments", "hn_url", "country", "source_list", "collected_at",
 ]
 SNAP_FIELDS = ["date", "url", "stars", "hn_points", "hn_comments"]
 
@@ -93,6 +93,29 @@ def main():
             continue
         row = {f: r.get(f, "") for f in FIELDS}
         row["source"] = "hackernews"
+        merged[key] = row
+
+    # Hand-curated leads (cohort lists, government compendia, ...): data/manual_leads.csv
+    for r in read("manual_leads.csv"):
+        url = (r.get("url") or "").strip()
+        if url and "://" not in url:
+            url = "https://" + url
+        key = norm(url)
+        if not key:
+            continue
+        if key not in merged and key in homepages:
+            key = homepages[key]
+        if key in merged:
+            row = merged[key]
+            if "manual" not in row["source"]:
+                row["source"] += "+manual"
+            row["country"] = row["country"] or r.get("country", "")
+            row["source_list"] = r.get("source_list", "")
+            continue
+        row = {f: "" for f in FIELDS}
+        row.update({"source": "manual", "name": r.get("name", ""), "url": url, "description": r.get("description", ""),
+                    "homepage": url, "country": r.get("country", ""), "source_list": r.get("source_list", ""),
+                    "collected_at": r.get("date_added", "")})
         merged[key] = row
 
     rows = sorted(merged.values(), key=lambda r: max(num(r["stars"]), num(r["hn_points"])), reverse=True)
