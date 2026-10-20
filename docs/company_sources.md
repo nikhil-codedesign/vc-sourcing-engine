@@ -108,3 +108,17 @@ state startup-policy lists, and whether data.gov.in offers a bulk company datase
 - "Under the radar" here means "no widely covered funding at the date checked". A Form D or grant is itself evidence that
   someone has already funded the company, so these companies are early, not unfunded.
 - Terms of use and rate limits change. Re-check before each new collector, and keep a User-Agent with a contact email.
+
+
+## F. Built so far (2026-10-20)
+
+| Collector | Output | Merge rule | Verified? |
+|-----------|--------|------------|-----------|
+| `ingest_sbir.py` (DOE by default, last 3 years; set repo variable `SBIR_AGENCIES` to change) | `raw_sbir.csv`, one row per firm | By website domain | API shape checked against sbir.gov/api. The page says the API is "under maintenance", and there is no keyword search, so it pulls whole agency-years. **Not run live yet** |
+| `ingest_nsf.py` (keywords in `config/nsf_keywords.txt`) | `raw_nsf.csv` | By company name (the API gives no website). Unmatched firms go to `data/unmatched_grants.csv` | **Parameters unverified**: the NSF docs page blocks automated readers. Check the first run's log |
+| `ingest_yc.py` | `calibration_yc.csv` | Not a lead source. `recall.py` reports how many YC climate companies are already in `signals.csv` | yc-oss endpoint and fields checked. Tag list is a guess |
+
+All three fail soft: an API error prints a warning and keeps the old file. `dedupe.py` now merges company-shaped
+sources on **website domain** (`acme.com` matches a repo whose homepage is `acme.com/docs`), and adds
+`location`, `grant_awards`, `grant_total` and `grant_last_year` columns. Rows are still sorted by stars and Show HN
+points, so grant-only companies sit at the bottom until the Score step (Day 7) replaces star traction.

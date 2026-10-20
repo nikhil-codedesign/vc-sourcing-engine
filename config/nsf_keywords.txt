@@ -1,0 +1,14 @@
+# One NSF Awards API keyword search per line. Only SBIR/STTR awards (grants to companies) are kept.
+# DRAFT v0.1, untested against the live API.
+carbon capture
+carbon accounting
+battery
+energy storage
+grid
+solar
+heat pump
+electrolyzer
+methane
+decarbonization
+EV charging
+sustainable materials

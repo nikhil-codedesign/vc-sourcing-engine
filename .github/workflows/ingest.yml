@@ -33,8 +33,26 @@ jobs:
       - name: Collect Hacker News signals
         run: python src/ingest_hn.py
 
+      - name: Collect SBIR awards (US government grants)
+        continue-on-error: true   # the sbir.gov API is flaky; do not fail the whole run
+        env:
+          SBIR_AGENCIES: ${{ vars.SBIR_AGENCIES }}
+        run: python src/ingest_sbir.py
+
+      - name: Collect NSF SBIR awards
+        continue-on-error: true
+        run: python src/ingest_nsf.py
+
+      - name: Fetch YC climate list (calibration only)
+        continue-on-error: true
+        run: python src/ingest_yc.py
+
       - name: Merge and remove duplicates
         run: python src/dedupe.py
+
+      - name: Recall check against the YC list
+        continue-on-error: true
+        run: python src/recall.py
 
       - name: Save results
         run: |
