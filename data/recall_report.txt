@@ -1,1 +1,1 @@
-YC climate/energy companies: 224. Found in signals.csv: 0 (0% recall by website domain).
+YC climate/energy companies: 225. Found in signals.csv: 0 (0% recall by website domain).
